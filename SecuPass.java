@@ -157,6 +157,36 @@ public class SecuPass {
         System.out.println("Your new password is: " + charPassword);
     }
 
+    // Ask if user wants a reshuffle
+    public static void reshufflePassword(Scanner input, char[] password) {
+        System.out.print("Would you like to reshuffle your password? Y/N: ");
+        String reshuffle = input.next();
+
+        // Check that entry is valid. If not, ask user to reenter.
+        while (!((reshuffle.equalsIgnoreCase("y")||(reshuffle.equalsIgnoreCase("n"))))) {
+            System.out.println("Invalid input. Please try again. ");
+            System.out.print("Would you like to reshuffle your password? Y/N: ");
+            reshuffle = input.next();
+        }
+
+        // For valid entries, reshuffle and reprint.
+        while (reshuffle.equalsIgnoreCase("y")) {
+
+            shufflePassword(password);
+            printPassword(password);
+            // Ask again if user wants to reshuffle
+            System.out.print("Would you like to reshuffle your password? Y/N: ");
+            reshuffle = input.next();
+            // Check that entry is valid.
+            while (!((reshuffle.equalsIgnoreCase("y")||(reshuffle.equalsIgnoreCase("n"))))) {
+                System.out.println("Invalid input. Please try again. ");
+                System.out.print("Would you like to reshuffle your password? Y/N: ");
+                reshuffle = input.next();
+            }
+
+        }
+    }
+
     public static void main(String[] args) {
 
         // Create scanner and requirements array
@@ -175,6 +205,8 @@ public class SecuPass {
         int startIndex = fillRequiredCharacters(password, upper, lower, digit, special);
         fillRemainingCharacters(password, startIndex);
         shufflePassword(password);
+        printPassword(password);
+        reshufflePassword(input, password);
         printPassword(password);
 
         input.close();
